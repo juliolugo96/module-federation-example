@@ -5,24 +5,26 @@ const deps = require("./package.json").dependencies;
 
 module.exports = {
   entry: {
-    main: ['@babel/polyfill', path.resolve('.', 'src', 'index.js')]
+    main: ["@babel/polyfill", path.resolve(".", "src", "index.js")],
   },
   mode: "development",
   resolve: {
     alias: {
-      src: path.resolve('.', 'src')
+      src: path.resolve(".", "src"),
     },
-    extensions: ['*', '.js', '.jsx']
+    extensions: ["*", ".js", ".jsx"],
   },
   devServer: {
-    contentBase: path.join(__dirname, "public"),
-    host: '0.0.0.0',
+    host: "0.0.0.0",
     port: 3001,
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   output: {
     publicPath: "http://localhost:3001/",
-    chunkFilename: "[id].[contenthash].js"
+    chunkFilename: "[id].[contenthash].js",
+  },
+  watchOptions: {
+    ignored: /node_modules/,
   },
   module: {
     rules: [
@@ -33,6 +35,10 @@ module.exports = {
         options: {
           presets: ["@babel/preset-react"],
         },
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/,
+        type: "asset/resource",
       },
     ],
   },
@@ -45,7 +51,7 @@ module.exports = {
         "./ProductService": "./src/ProductService",
       },
       remotes: {
-        hostApp: "hostApp"
+        hostApp: "hostApp",
       },
       shared: {
         ...deps,
@@ -57,7 +63,7 @@ module.exports = {
           singleton: true,
           requiredVersion: deps["react-dom"],
         },
-      }
+      },
     }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",

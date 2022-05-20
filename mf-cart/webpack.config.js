@@ -15,14 +15,13 @@ module.exports = {
     extensions: ['*', '.js', '.jsx']
   },
   devServer: {
-    contentBase: path.join(__dirname, "public"),
     host: '0.0.0.0',
     port: 3002,
     historyApiFallback: true
   },
   output: {
     publicPath: "http://localhost:3002/",
-    chunkFilename: "[id].[contenthash].js"
+    chunkFilename: "[id].[contenthash].js",
   },
   module: {
     rules: [
@@ -34,7 +33,14 @@ module.exports = {
           presets: ["@babel/preset-react"],
         },
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/,
+        type: 'asset/resource',
+      },
     ],
+  },
+  watchOptions: {
+    ignored: /node_modules/
   },
   plugins: [
     new ModuleFederationPlugin({
